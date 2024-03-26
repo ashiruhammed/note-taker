@@ -306,7 +306,7 @@ function Task({ todo, id }: { todo: DocumentData; id: string }) {
                 );
                 setOpenedTab("");
               }}>
-              <img src="/src/assets/Buttons.svg" alt="delete todo" />
+              <img src="/assets/Buttons.svg" alt="delete todo" />
             </button>
           </div>
         </div>
