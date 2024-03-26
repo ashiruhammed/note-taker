@@ -13,14 +13,14 @@ export default {
           DEFAULT: "#BA5112",
         },
         backgroundImage: {
-          "bg-mobile": "url('/src/assets/auth-bg-mobile.png')",
+          "bg-mobile": "url('/assets/auth-bg-mobile.png')",
           "footer-texture": "url('/img/footer-texture.png')",
         },
         secondary: "#251814",
       },
       content: {
-        "add-icon": "url('/src/assets/add-icon.png')",
-        "logout-icon": "url('/src/assets/logout-icon.svg')",
+        "add-icon": "url('/assets/add-icon.png')",
+        "logout-icon": "url('/assets/logout-icon.svg')",
       },
     },
     screens: {

@@ -118,7 +118,7 @@ function Main() {
           </div>
           <img
             className="col-start-2 col-end-3 mt-3 place-self-end row-span-full self-stretch min-h-full mobile:max-w-[100px] md:max-w-[140px] lg:max-w-[220px] lg:-ml-10"
-            src="/src/assets/user-image.svg"
+            src="/assets/user-image.svg"
           />
         </section>
       )}
@@ -188,12 +188,12 @@ function Main() {
             <TaskPercentContainer
               todos={todos}
               type="active"
-              imgSrc="/src/assets/active-icon.svg"
+              imgSrc="/assets/active-icon.svg"
             />
             <TaskPercentContainer
               todos={todos}
               type="completed"
-              imgSrc="/src/assets/completed-icon.svg"
+              imgSrc="/assets/completed-icon.svg"
             />
           </div>
         ) : (
