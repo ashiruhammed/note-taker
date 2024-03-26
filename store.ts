@@ -11,3 +11,5 @@ export function setOpenedTab(value: string) {
 }
 
 // self.addEventListener("co");
+
+clientInformation;

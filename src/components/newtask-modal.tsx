@@ -3,13 +3,7 @@ import { useFormik } from "formik";
 import { Fragment, useState } from "react";
 import * as Yup from "yup";
 import Input from "./input";
-import {
-  addDoc,
-  collection,
-  doc,
-  serverTimestamp,
-  setDoc,
-} from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { auth, firestore } from "../../firebase";
 
 export default function NewTaskModal() {

@@ -7,8 +7,6 @@ import { RouterProvider } from "react-router";
 import { createBrowserRouter } from "react-router-dom";
 import SignIn from "./components/signin.tsx";
 import SignUp from "./components/signup.tsx";
-import { getRedirectResult } from "firebase/auth";
-import { auth } from "../firebase.ts";
 
 const router = createBrowserRouter([
   {

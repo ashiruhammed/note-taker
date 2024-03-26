@@ -1,13 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Link, useNavigate } from "react-router-dom";
 import Input from "./input";
-import React, { useEffect } from "react";
 import { auth } from "../../firebase";
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
-  signInWithRedirect,
   signInWithPopup,
 } from "firebase/auth";
 import { useFormik } from "formik";
@@ -23,34 +20,33 @@ function SignUp() {
     if (user) navigate("/");
   });
   const provider = new GoogleAuthProvider();
-  const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
-    useFormik({
-      initialValues: {
-        email: "",
-        password: "",
-      },
-      validationSchema: Yup.object({
-        password: Yup.string().required("Password is required"),
-        email: Yup.string().email("Invalid email address").required("Required"),
-      }),
-      onSubmit: async (values) => {
-        try {
-          const checkUser = await createUserWithEmailAndPassword(
-            auth,
-            values.email,
-            values.password
-          );
-        } catch (err) {
-          if (err) {
-            toast.error("Email already in use", {
-              position: "top-center",
-              className: "bg-green-300 h-12",
-            });
-            console.log(err);
-          }
+  const { handleChange, handleSubmit, values, errors, touched } = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      password: Yup.string().required("Password is required"),
+      email: Yup.string().email("Invalid email address").required("Required"),
+    }),
+    onSubmit: async (values) => {
+      try {
+        await createUserWithEmailAndPassword(
+          auth,
+          values.email,
+          values.password
+        );
+      } catch (err) {
+        if (err) {
+          toast.error("Email already in use", {
+            position: "top-center",
+            className: "bg-green-300 h-12",
+          });
+          console.log(err);
         }
-      },
-    });
+      }
+    },
+  });
 
   return (
     <div className="h-screen p-8 md:px-16 md:flex items-center bg-[url('/src/assets/auth-bg-mobile.png')] md:bg-[url('/src/assets/auth-bg-desktop.png')] bg-cover bg-no-repeat">

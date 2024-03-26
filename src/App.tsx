@@ -28,23 +28,28 @@ interface Task {
 
 function App() {
   const navigate = useNavigate();
-  document.body.addEventListener("click", function (e) {
-    const taskContainer = document.getElementById("taskContainer");
-    if (taskContainer?.contains(e.target as Node)) {
-      return;
-    } else {
-      setOpenedTab("");
-    }
-  });
+
   useEffect(function () {
     onAuthStateChanged(auth, (user) => {
       if (!user?.uid) navigate("/sign-in");
     }),
       [];
+
+    document
+      .getElementById("taskContainer")
+      ?.addEventListener("click", function (e) {
+        const taskWrapper = document.getElementById("task-wrapper");
+        if (taskWrapper?.contains(e.target as Node)) {
+          return;
+        } else setOpenedTab("");
+      });
   });
 
   return (
-    <div className="md:grid grid-cols-[auto_1fr] h-screen max-w-[1600px] mx-auto">
+    <div
+      tabIndex={0}
+      aria-label="Welcome to the Todo App"
+      className="md:grid grid-cols-[auto_1fr] h-screen max-w-[1600px] mx-auto">
       <Nav />
       <Main />
     </div>
@@ -87,6 +92,7 @@ function Main() {
           onClick={() => {
             signOut(auth);
           }}
+          aria-label="Sign out"
           className="shadow-lg gap-2 md:py-3 rounded-lg after:content-logout-icon bg-primary flex items-center justify-between px-4 after:block after:h-full py-2 text-white">
           Sign out
         </button>
@@ -96,10 +102,16 @@ function Main() {
         <section className="grid grid-cols-2 grid-rows-[auto_20%]">
           <div className="rounded-lg shadow-md lg:p-20 lg:py-10  p-6 md:p-8 col-span-full row-start-1 row-end-2">
             <div>
-              <h2 className="text-xs sm:text-xl tablet:text-2xl font-bold md:text-2xl lg:text-4xl capitalize">
+              <h2
+                tabIndex={0}
+                aria-live="off"
+                className="text-xs sm:text-xl tablet:text-2xl font-bold md:text-2xl lg:text-4xl capitalize">
                 Hello, {user?.displayName || "Pal"}
               </h2>
-              <p className="text-xs sm:text-sm tablet:text-md md:text-base">
+              <p
+                aria-live="off"
+                tabIndex={0}
+                className="text-xs sm:text-sm tablet:text-md md:text-base">
                 What do you want to do today
               </p>
             </div>
@@ -113,12 +125,16 @@ function Main() {
 
       <section className="grid grid-rows-[auto_auto_auto] md:grid-rows-1 mt-8 md:mt-0 md:grid-cols-[1fr_auto] gap-8">
         <div className="flex justify-between items-center gap-4 md:col-start-1 col-span-full md:row-start-1 row-end-1">
-          <h2 className="text-xs md:text-xl lg:text-3xl tablet:text-base font-semibold">
+          <h2
+            className="text-xs md:text-xl lg:text-3xl tablet:text-base font-semibold"
+            aria-label={`Today's ${state} task`}
+            tabIndex={0}>
             Today's {state !== "dashboard" && state} Task
           </h2>
           <div className="flex gap-4 md:gap-8">
             {state === "dashboard" && (
               <button
+                aria-label="delete all todo"
                 onClick={() => {
                   todos.forEach((todo) =>
                     deleteDoc(
@@ -136,28 +152,36 @@ function Main() {
                 Delete All
               </button>
             )}
-            <p className="text-xs tablet:text-base">
+            <p
+              aria-live="off"
+              role="date"
+              tabIndex={0}
+              className="text-xs tablet:text-base">
               {toDate(new Date()).toDateString()}
             </p>
           </div>
         </div>
         <div
           id="taskContainer"
-          className="space-y-5 px-3 overflow-y-auto min-h-[400px] max-h-[400px] md:max-h-[400px] col-start-1 md:row-start-2 relative py-4">
-          {todos
-            .filter((todo, i) => {
-              if (state === "dashboard") return true;
-              return todo.status === state;
-            })
-            .map((todo, i) => (
-              <Task todo={todo} id={todo.id} key={i} />
-            ))}
-          {!todos.length && !loader && (
-            <div className="font-bold text-center col-span-full mt-8">
-              Your task is empty add a new task
-            </div>
-          )}
-          {loader && <Loader />}
+          className="px-3 overflow-y-auto min-h-[400px] max-h-[400px] md:max-h-[400px] col-start-1 md:row-start-2 relative py-4"
+          tabIndex={0}
+          aria-label="todo lists">
+          <ul className="space-y-5" id="task-wrapper">
+            {todos
+              .filter((todo) => {
+                if (state === "dashboard") return true;
+                return todo.status === state;
+              })
+              .map((todo, i) => (
+                <Task todo={todo} id={todo.id} key={i} />
+              ))}
+            {!todos.length && !loader && (
+              <div className="font-bold text-center col-span-full mt-8">
+                Your task is empty add a new task
+              </div>
+            )}
+            {loader && <Loader />}
+          </ul>
         </div>
         {todos.length && state === "dashboard" ? (
           <div className="grid grid-cols-2 gap-4 md:grid-cols-1 row-start-1 row-span-2 md:justify-self-end md:row-start-2 md:row-end-3">
@@ -191,9 +215,9 @@ function Task({ todo, id }: { todo: DocumentData; id: string }) {
     [openedTab]
   );
   const { status, title, time, description } = todo;
-  console.log(time?.toDate(), description);
+
   return (
-    <div className="relative">
+    <li className="relative">
       <div
         id={`container${id}`}
         onClick={() => {
@@ -204,7 +228,7 @@ function Task({ todo, id }: { todo: DocumentData; id: string }) {
         }}
         className={`flex ${
           status === "completed" ? "bg-primary-bg" : "bg-white"
-        }  rounded-lg shadow-sm items-center  p-5 border border-black/5 gap-3 cursor-pointer -z-50`}>
+        }  rounded-lg shadow-sm items-center  p-5 border border-black/5 gap-3 cursor-pointer -z-50 task`}>
         <input
           type="checkbox"
           name="checkBox"
@@ -287,7 +311,7 @@ function Task({ todo, id }: { todo: DocumentData; id: string }) {
           </div>
         </div>
       }
-    </div>
+    </li>
   );
 }
 
@@ -302,14 +326,12 @@ function TaskPercentContainer({
 }) {
   const todoType = todos.filter((todo) => todo.status == type);
   const percentage = (todoType.length / todos.length) * 100;
-
-  console.log(percentage);
   return (
     <div
       className={` ${
         type === "active" ? "bg-primary-bg" : "bg-primary"
-      } p-3 rounded-lg text-white space-3 flex gap-3 md:max-w-[180px] md:flex-col justify-center
-      md:gap-4 items-center`}>
+      } p-3 rounded-lg text-white space-3 flex gap-6 md:max-w-[180px] md:flex-col justify-center
+      md:gap-4 md:items-center`}>
       <img src={imgSrc} alt="icon" className="w-6 md:w-8" />
       <div className="text-base md:text-2xl md:text-center">
         <p className="text-base font-semibold text-white">

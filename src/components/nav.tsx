@@ -1,5 +1,3 @@
-import React from "react";
-
 import { TabListBox } from "./list-box";
 import { useStore } from "@nanostores/react";
 import { $state, setState } from "../../store";
@@ -36,7 +34,15 @@ function List() {
     <ul className="space-y-6 hidden md:block">
       {["dashboard", "active", "completed"].map((list, i) => (
         <li
+          role="button"
+          tabIndex={0}
+          aria-live="off"
           key={i}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              setState(list);
+            }
+          }}
           onClick={() => setState(list)}
           className={`p-4 ${
             state == list ? "bg-primary-bg" : ""

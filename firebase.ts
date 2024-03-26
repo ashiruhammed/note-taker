@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
-import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAwM7i0Dc3pZyqfCOaj5e6eMgZLVbKX0FI",
@@ -17,6 +16,5 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 export const auth = getAuth(app);
 export const firestore = getFirestore(app);

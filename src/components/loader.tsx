@@ -1,5 +1,3 @@
-import React from "react";
-
 function Loader() {
   return (
     <div role="status" className="absolute inset-0 left-1/2 top-1/2 m-auto">
