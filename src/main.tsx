@@ -4,21 +4,21 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { RouterProvider } from "react-router";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, createHashRouter } from "react-router-dom";
 import SignIn from "./components/signin.tsx";
 import SignUp from "./components/signup.tsx";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <App />,
   },
   {
-    path: "/signin",
+    path: "signin",
     element: <SignIn />,
   },
   {
-    path: "/signup",
+    path: "signup",
     element: <SignUp />,
   },
 ]);
