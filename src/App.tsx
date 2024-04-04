@@ -31,7 +31,7 @@ function App() {
 
   useEffect(function () {
     onAuthStateChanged(auth, (user) => {
-      if (!user?.uid) navigate("/sign-in");
+      if (!user?.uid) navigate("/signin");
     }),
       [];
 
