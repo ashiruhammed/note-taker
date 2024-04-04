@@ -1,9 +1,9 @@
-import { TabListBox } from "./list-box";
+import { TabListBox } from "./../components/list-box";
 import { useStore } from "@nanostores/react";
 import { $state, setState } from "../../store";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
-import NewTaskModal from "./newtask-modal";
+import NewTaskModal from "../components/newtask-modal";
 
 function Nav() {
   return (

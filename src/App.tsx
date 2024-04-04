@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { User, onAuthStateChanged, signOut } from "firebase/auth";
 import { auth, firestore } from "../firebase";
-import Nav from "./components/nav";
+import Nav from "../public/components/nav";
 import { useStore } from "@nanostores/react";
 import { $openedTab, $state, setOpenedTab } from "../store";
 import { useNavigate } from "react-router";
@@ -17,7 +17,7 @@ import {
   query,
   setDoc,
 } from "firebase/firestore";
-import Loader from "./components/loader";
+import Loader from "../public/components/loader";
 
 import { formatDistance, toDate } from "date-fns";
 
